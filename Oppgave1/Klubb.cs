@@ -3,63 +3,70 @@ using System.Collections.Generic;
 using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Oppgave1
 {
-    enum farge {RØD, BLÅ, GRØNN, GUL, HVIT, LILLA, BRUN, UKJENT}
-    internal class Klubb
+    enum Farge {RØD, BLÅ, GRØNN, GUL, HVIT, LILLA, BRUN, UKJENT}
+    class Klubb
     {
 
         //oppg a
-          public string klubbNavn; 
-          public int antallMedlemmer;
+          string _klubbNavn = ""; 
+          public int _antallMedlemmer = 0;
         
         // oppg b 
-        public string KlubbNavn
+        public string? klubbNavn
         {
-            get { return klubbNavn; }
+            get { return _klubbNavn; }
             set
             {
-                if (klubbNavn = "") value = "x"; 
-                else if (klubbNavn = string.Empty) value = "x";
-                else (klubbNavn = value);  
-
+                _klubbNavn = value?.Length > 0 ? value ?? "x" : "x";
             }
         }
 
-        public int AntallMedlemmer 
+        public int? antallMedlemmer 
         {
-            get { return antallMedlemmer; }
+            get { return _antallMedlemmer; }
             set
             {
-                if (value < 0) value = 0;
-                else antallMedlemmer = value ;
+                _antallMedlemmer = value >= 0 ? value ?? 0 : 0;
             }
         }
         // oppg c 
         // obs se enum over klassen, men under namespace 
 
-        farge draktFarge; 
+        Farge _draktFarge; 
         
-        public farge DraktFarge
+        public Farge? draktFarge
         {
-            get{ return draktFarge; }
-            set{ draktFarge = value; }
+            get{ return _draktFarge; }
+            set
+            {
+                _draktFarge = Enum.IsDefined(value ?? 0) ? value ?? Farge.UKJENT : Farge.UKJENT;
+            }
         }
         
         // oppg d 
 
-        public Klubb()
+        public Klubb(string? klubbNavn, int? antallMedlemmer, Farge? draktFarge)
         {
-            antallMedlemmer = 0;
+            this.klubbNavn = klubbNavn;
+            this.antallMedlemmer = antallMedlemmer;
+            this.draktFarge = draktFarge;
         }
 
-        public Klubb(int antallMedlemmer, string klubbNavn, farge draktFarge)
+        public string SkrivUt(bool? line = false, bool? print = true)
         {
-            AntallMedlemmer = antallMedlemmer;
-            KlubbNavn = klubbNavn;
-            DraktFarge = draktFarge;
+            string tmp = "tesktformatet me ønsker klubben på";
+            if (print ?? true)
+            {
+                Console.Write(tmp);
+                
+                if (line ?? false) Console.WriteLine();
+            }
+            return tmp;
         }
     }
 }

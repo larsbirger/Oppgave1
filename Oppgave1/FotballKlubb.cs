@@ -1,37 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
+﻿
 namespace Oppgave1
 {
     internal class FotballKlubb : Klubb
     {
         // oppg f
-        private static int divisjon;
+        private static int _divisjon;
 
-        public int Divisjon
+        //KlubbNavn = klubbNavn;
+        //AntallMedelemmer = antallMedelemmer;
+        //DraktFarge = draktFarge; 
+        //Divisjon = divisjon;
+
+        public int? divisjon
         {
-            get { return divisjon; }
+            get { return _divisjon; }
             set 
-            { 
-                if (divisjon < 0) value = 0;  // satte value til 0 for vet ikke hva som er laveste divisjon  
+            {
+                _divisjon = value >= 0 ? value ?? 0 : 0;
+                //if (_divisjon < 0) value = 0;  // satte value til 0 for vet ikke hva som er laveste divisjon  
             } 
         }
 
         // oppg g
 
-        string land; // for å la dette datamedlemet oppdateres utenfor klassen må det ikke være static 
+        string _land = ""; // for å la dette datamedlemet oppdateres utenfor klassen må det ikke være static 
 
-        public string Land
+        public string? land
         {
-            get => land;
-            set => land = value;    
+            get => _land ?? "";
+            set => _land = value ?? "";    
         }
 
         // oppg h 
@@ -40,12 +37,11 @@ namespace Oppgave1
 
         // oppg i 
 
-        public FotballKlubb(string klubbnavn, int antallMedelemmer, farge draktFarge, int divisjon) // kan eventuellt bruke : base(string klubbnavn, int antallMedelemmer, string draktFarge)
+        public FotballKlubb(string? klubbNavn, int? antallMedlemmer, Farge? draktFarge, int? divisjon, string? land = "")
+            : base(klubbNavn: klubbNavn, antallMedlemmer: antallMedlemmer, draktFarge:draktFarge)
         {
-            KlubbNavn = klubbNavn;
-            AntallMedelemmer = antallMedelemmer;
-            DraktFarge = draktFarge;
-            Divisjon = divisjon;
+            this.divisjon = divisjon;
+            this.land = land;
         }
 
 
@@ -67,7 +63,7 @@ namespace Oppgave1
           get { return SpillerMot; }
           set 
           {
-            if (H && B = )  
+            // if (H && B = )  
           }        
         }
 
